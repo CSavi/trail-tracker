@@ -1,9 +1,31 @@
 class UsersController < ApplicationController
 
   # GET: /users
-  get "/users" do
-    erb :"/users/index.html"
+  get "/users/:slug" do
+    @user = User.find_by_slug(params[:slug])
+    erb :"/users/show"
   end
+
+  #GET: signup
+  # GET: login
+  get '/signup' do
+    if !is_logged_in?
+      erb :'/users/signup'
+    else
+      redirect :'/trails'
+    end
+  end
+
+  #POST: signup
+  post '/signup' do
+    if params[:username] == "" || params[:password] == "" || params[:email] == ""
+      redirect :"/signup"
+    else
+      @user = User.create(username: params[:username], email: params[:email], password: params[:password])
+      session[:user_id] = @user.id
+      redirect :'/trails'
+    end
+  end            
 
   # GET: /users/new
   get "/users/new" do
