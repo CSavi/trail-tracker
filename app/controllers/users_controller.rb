@@ -17,7 +17,7 @@ class UsersController < ApplicationController
 
   post '/signup' do
     if params[:username] == "" || params[:password] == "" || params[:email] == ""
-      #flash[:error] = "You must fill out all fields to sign up."
+      flash[:error] = "You must fill out all fields to sign up."
       redirect :signup
     # elsif User.find_by(username: params[:username])
     #   #flash[:error] = "That username already exits."
