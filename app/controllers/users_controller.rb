@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     erb :'/users/show'
   end
 
-  #GET: signup
+
   get '/signup' do
     if is_logged_in?
       redirect :"/users/#{@user.slug}"
@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     end
   end
 
-  #POST: signup
+
   post '/signup' do
     if params[:username] == "" || params[:password] == "" || params[:email] == ""
       #flash[:error] = "You must fill out all fields to sign up."
@@ -47,12 +47,6 @@ class UsersController < ApplicationController
     end
   end
 
-
-
-  # DELETE: /users/5/delete
-  delete "/users/:id/delete" do
-    redirect "/users"
-  end
 
   get '/logout' do
     session.clear
