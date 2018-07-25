@@ -1,3 +1,17 @@
+user_hash = [
+   {
+    :username => "csavi",
+    :password => "xx",
+    :email => "carrielane@flatiron.com"
+  }
+]
+
+
+
+user_hash.each do |user|
+  t = User.create(user)
+end
+
 
 
 trails_list = {

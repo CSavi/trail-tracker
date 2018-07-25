@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     if !is_logged_in?
       erb :login
     else
-      redirect :'/trails/trails'
+      redirect :'/users/show'
     end
   end
 
