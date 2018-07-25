@@ -1,1 +1,13 @@
-<h1>This is the show page for an individual instance of your model.</h1>
+<h2>Trail Name:<%= @trail.name %></h2>
+<h3>Location:<%= @trail.location %></h3>
+<h3>Distance(mi):<%= @trail.distance %></h3>
+<h3>Date:<%= @trail.date %></h3>
+<h3>Notes:<%= @trail.notes %></h3>
+<p><a href="/trails/<%= @trail.id %>/edit">Edit Tweet</a></p>
+
+
+
+<form action="/trails/<%= @trail.id %>/delete" method="POST">
+  <input type="hidden" id="hidden" name="_method" value="delete">
+  <input type="submit" name="delete" value="Delete Trail">
+</form>

@@ -2,7 +2,6 @@ class UsersController < ApplicationController
 
   get "/users/:slug" do
     @user = User.find_by_slug(params[:slug])
-    @trails = @user.trails
     erb :'/users/show'
   end
 
@@ -17,24 +16,24 @@ class UsersController < ApplicationController
 
   #POST: signup
   post '/signup' do
-    @user = User.create(username: params[:username], email: params[:email], password: params[:password])
-      if @user.valid?
-        session[:user_id] = @user.id
-        redirect :"/users/#{@user.slug}"
-      elsif @user.invalid? && User.find_by(username: params[:username])
-      flash[:error] = "That username already exits."
+    if params[:username] == "" || params[:password] == "" || params[:email] == ""
+      #flash[:error] = "You must fill out all fields to sign up."
       redirect :signup
-      else
-        flash[:error] = "You must fill out all fields to sign up."
-        redirect :signup
-      end
+    # elsif User.find_by(username: params[:username])
+    #   #flash[:error] = "That username already exits."
+    #   redirect :signup
+    else
+      @user = User.create(username: params[:username], email: params[:email], password: params[:password])
+      session[:user_id] = @user.id
+      redirect :"/users/#{@user.slug}"
+    end
   end
 
   get '/login' do
     if !is_logged_in?
       erb :login
     else
-      redirect :'/trails'
+      redirect :'/trails/trails'
     end
   end
 

@@ -71,7 +71,7 @@ class TrailsController < ApplicationController
 
   delete "/trails/:id/delete" do
     @trail = Trail.find_by_id(params[:id])
-    if current_user.id == @tweet.id && is_logged_in?
+    if current_user.id == @trail.id && is_logged_in?
       @trail.delete
       flash[:success] = "Successfully deleted trail"
       redirect :"/trails"
