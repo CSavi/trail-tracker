@@ -1,0 +1,18 @@
+<h2>Welcome, <%= @user.username %></h2>
+
+<h3>You have logged <%= @user.trails.size %>running trails.</h3>
+<h3>All Trails</h3>
+  <% @user.trails.each.with_index(1) do |trail| %>
+    <p>Trail <%= i %>: <%= trail.name %></p>
+  <%end%>
+
+<h3>Ready to log more trails?</h3>
+
+<h4><a href="/trails/new">YES!</a><h4>
+
+<p><a href="/sessions/logout">Log Out</a></p>
+
+<!---<h3>Needing inspiration to decide on your next exploration? Check out this video!</h3>
+<center>
+  <iframe>
+</center>-->

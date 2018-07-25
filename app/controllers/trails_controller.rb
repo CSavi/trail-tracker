@@ -1,37 +1,82 @@
 class TrailsController < ApplicationController
 
-  # GET: /trails
+
   get "/trails" do
-    erb :"/trails/index.html"
+    @user = User.find_by_id(session[:user_id])
+    if is_logged_in?
+      @trails = Trail.all
+      erb :"/trails/trails"
+    else
+      redirect :login
+    end
   end
 
-  # GET: /trails/new
+
   get "/trails/new" do
-    erb :"/trails/new.html"
+    if is_logged_in?
+      erb :"/trails/new"
+    else
+      redirect :login
+    end
   end
 
-  # POST: /trails
+
   post "/trails" do
-    redirect "/trails"
+    if !is_logged_in?
+      redirect :login
+    elsif params[:name] == "" || params[:location] == ""
+      redirect :"/trails/new"
+    else
+      @trail = Trail.create(name: params[:name], location: params[:location], date: params[:date], distance: params[:distance], notes: params[:notes])
+      @trail.save
+      flash[:success] = "You have created a new trail"
+      redirect "/trails/#{@trail.id}"
+    end
   end
 
-  # GET: /trails/5
+
   get "/trails/:id" do
-    erb :"/trails/show.html"
+    if is_logged_in?
+      @user = current_user
+      @trail = Trail.find_by_id(params[:id])
+      erb :"/trails/show"
+    else
+      redirect :login
+    end
   end
 
-  # GET: /trails/5/edit
+
   get "/trails/:id/edit" do
-    erb :"/trails/edit.html"
-  end
+    @trail = Trail.find_by_id(params[:id])
+      if is_logged_in? && @trail.user_id == current_user.id
+        erb :"/trails/edit"
+      else
+        redirect :login
+      end
+   end
 
-  # PATCH: /trails/5
+
   patch "/trails/:id" do
-    redirect "/trails/:id"
+    @trail = Trail.find_by_id(params[:id])
+    if is_logged_in? && params[:name] == "" || params[:location] == ""
+      redirect :"/trails/#{@trails.id}/edit"
+    else
+      @trail.update(name: params[:name], location: params[:location], date: params[:date], distance: params[:distance], notes: params[:notes])
+      @trail.save
+      flash[:success] = "Successfully edited trail"
+      redirect "/trails/#{@trails.id}"
+    end
   end
 
-  # DELETE: /trails/5/delete
+
   delete "/trails/:id/delete" do
-    redirect "/trails"
+    @trail = Trail.find_by_id(params[:id])
+    if current_user.id == @tweet.id && is_logged_in?
+      @trail.delete
+      flash[:success] = "Successfully deleted trail"
+      redirect :"/trails"
+    else
+      redirect :"/trails/trails"
+    end
   end
 end

@@ -1,1 +1,7 @@
-<h1>This is the Model's index page.</h1>
+<h2>Welcome, <%= @user.username %></h2>
+<br>
+
+<% @user.trails.each do |trail| %>
+<a href="/trails/<%= trail.id %>"><h3><%= trail.name %></h3></a>
+<label>Location:<%= trail.location %></label>
+<% end %>
