@@ -1,10 +1,5 @@
 class UsersController < ApplicationController
 
-  get "/users/:slug" do
-    @user = User.find_by_slug(params[:slug])
-    erb :'/users/show'
-  end
-
 
   get '/signup' do
     if is_logged_in?
@@ -33,7 +28,7 @@ class UsersController < ApplicationController
     if !is_logged_in?
       erb :login
     else
-      redirect :'/users/show'
+      redirect :'/trails'
     end
   end
 
@@ -41,12 +36,19 @@ class UsersController < ApplicationController
     @user = User.find_by(username: params[:username])
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
-      redirect :'/trails'
+      flash[:success] = "Welcome back, #{@user.username}!"
+      redirect :"/trails/trails"
     else
-      redirect :'/signup'
+      flash[:error] = "Invalid username or password. Please try again."
+      redirect :login
     end
   end
 
+  get "/users/:slug" do
+    @user = User.find_by_slug(params[:slug])
+
+    erb :'/users/show'
+  end
 
   get '/logout' do
     session.clear
