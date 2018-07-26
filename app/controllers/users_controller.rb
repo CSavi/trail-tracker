@@ -37,10 +37,10 @@ class UsersController < ApplicationController
     @user = User.find_by(username: params[:username])
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
-      flash[:success] = "Welcome back, #{@user.username}!"
+    #  flash[:success] = "Welcome back, #{@user.username}!"
       redirect :"/users/#{@user.slug}"
     else
-    #  flash[:error] = "Invalid username or password. Please try again."
+      flash[:error] = "Invalid username or password. Please try again."
       redirect :'/login'
     end
   end

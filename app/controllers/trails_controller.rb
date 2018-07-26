@@ -60,10 +60,10 @@ class TrailsController < ApplicationController
 
 
   patch "/trails/:id" do
+    @trail = Trail.find_by_id(params[:id])
     if is_logged_in? && (params[:name] == "" || params[:location] == "")
         redirect :"/trails/#{@trail.id}/edit"
     else
-      @trail = Trail.find_by_id(params[:id])
       @trail.update(name: params[:name], location: params[:location], date: params[:date], distance: params[:distance], notes: params[:notes])
       flash[:success] = "Successfully edited trail"
       redirect "/trails/#{@trail.id}"
@@ -74,13 +74,13 @@ class TrailsController < ApplicationController
   delete "/trails/:id/delete" do
     @trail = Trail.find_by_id(params[:id])
     if is_logged_in?
-      @trail.user_id = current_user.id
+      @user = current_user
       if @user.trails.include?(@trail)
         @trail.delete
         flash[:message] = "Successfully deleted trail"
-        redirect :"/trails/trails"
+        redirect :"/trails"
       else
-        redirect :"/trails/trails"
+        redirect :"/trails"
       end
     end
   end
