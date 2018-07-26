@@ -1,13 +1,28 @@
-<h2>Trail Name:<%= @trail.name %></h2>
-<h3>Location:<%= @trail.location %></h3>
-<h3>Distance(mi):<%= @trail.distance %></h3>
-<h3>Date:<%= @trail.date %></h3>
-<h3>Notes:<%= @trail.notes %></h3>
-<p><a href="/trails/<%= @trail.id %>/edit">Edit Tweet</a></p>
+<br></br>
+  <div class="btn-grp">
+    <a href="/users/<%= @user.slug %>"><button type="button" class="btn btn-primary">Profile</button></a>
+    <br></br>
+        <% if @trail.user_id == current_user.id %>
+        <a href="/trails/<%= @trail.id %>/edit"><button type="button" class="btn btn-success">Edit</button></a>
+      <% end %>
+  </div>
 
 
+
+<center><h2>Trail Name: <%= @trail.name %></h2>
+<h3>Location: <%= @trail.location %></h3>
+<h3>Distance(mi): <%= @trail.distance %></h3>
+<h3>Date: <%= @trail.date %></h3>
+<h3>Notes: <%= @trail.notes %></h3></center>
+<br></br>
+
+
+
+<% if @trail.user == current_user %>
 
 <form action="/trails/<%= @trail.id %>/delete" method="POST">
   <input type="hidden" id="hidden" name="_method" value="delete">
   <input type="submit" name="delete" value="Delete Trail">
 </form>
+
+<% end %>

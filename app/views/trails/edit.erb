@@ -1,14 +1,18 @@
-<h1>Edit Your Trail:</h1>
+<center><h2>Edit your entry: <%= @trail.name %></h2>
+<br></br>
 
 <form action="/trails/<%= @trail.id %>" method="POST">
   <input type="hidden" id="hidden" name="_method" value="PATCH">
 
-  <label for="name">Trail Name: <input type="text" name="name" id="name" value="<%= @trail.name %>"><br>
-  <label for="location">Location: <input type="text" name="location" id="location" value="<%= @trail.location %>"><br>
-  <label for="distance">Distance: <input type="float" name="distance" id="distance" value="<%= @trail.distance %>"><br>
-  <label for="notes">Notes: <input type="text" name="notes" id="notes" value="<%= @trail.notes %>"><br>
+  <label for="name">Trail Name: <input type="text" name="name" id="name" value="<%= @trail.name %>">
+    <br></br>
+  <label for="location">Location: <input type="text" name="location" id="location" value="<%= @trail.location %>">
+    <br></br>
+  <label for="distance">Distance: <input type="float" name="distance" id="distance" value="<%= @trail.distance %>">
+    <br></br>
+  <label for="notes">Notes: <input type="text" name="notes" id="notes" value="<%= @trail.notes %>">
   <br></br>
 
-  <input type="submit" value="Submit Changes">
+  <input type="submit" value="Submit Changes"></center>
 
 </form>

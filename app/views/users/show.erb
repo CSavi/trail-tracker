@@ -1,17 +1,35 @@
-<h2>Welcome, <%= @user.username %></h2>
+<div class="btn-grp">
+  <a href="/users/<%= @user.slug %>"><button type="button" class="btn btn-primary">Profile</button></a>
+  <br></br>
+</div>  
+
+<h2>Welcome, <%= "#{@user.username.capitalize}" %>!</h2>
 <br></br>
 
-<h3>You have logged <%= @user.trails.size %>running trails.</h3>
-<h3>All Trails</h3>
-  <% @user.trails.each.with_index(1) do |trail| %>
-    <p>Trail <%= i %>: <%= trail.name %></p>
-  <%end%>
+<% if @user == current_user %>
+<center><h3>You have logged <%= @user.trails.size %> trail(s):</h3>
+<br></br>
 
+<% else %>
+<h3>Logged trails: <%= @user.trails.size %></h3>
+<% end %>
+
+<% @user.trails.each do |trail| %>
+  <a href="/trails/<%= trail.id %>"><h3><%= trail.name %></h3></a>
+<%end%>
+<br></br>
+<br></br>
+
+<% if @user == current_user %>
 <h3>Ready to log more trails?</h3>
+<br></br>
 
-<h4><a href="/trails/new">YES!</a><h4>
-
+<h4><a href="/trails/new">YES!</a><h4></center>
+<br></br>
+<br></br>
 <p><a href="/sessions/logout">Log Out</a></p>
+<% end %>
+</center>
 
 <!---<h3>Needing inspiration to decide on your next exploration? Check out this video!</h3>
 <center>

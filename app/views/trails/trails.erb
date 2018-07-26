@@ -1,7 +1,17 @@
-<h2>Welcome, <%= @user.username %></h2>
-<br>
+<div class="btn-group">
+    <a href="/users/<%= @user.slug %>"><button type="button" class="btn btn-primary">Profile</button></a>
+    <a href="/trails/new"><button type="button" class="btn btn-success">Add Trail</button></a>
+</div>
+<br></br>
 
-<% @user.trails.each do |trail| %>
-<a href="/trails/<%= trail.id %>"><h3><%= trail.name %></h3></a>
-<label>Location:<%= trail.location %></label>
-<% end %>
+<h2>Welcome, <%= @user.username.capitalize %>!</h2>
+<br></br>
+
+<center><h3>Trail Log</h3>
+<br></br>
+
+
+
+<% @trails.each do |trail| %>
+<a href="/trails/<%= trail.id %>"><p><%= trail.name %> - <%= trail.location %></a><br>Posted by: <%= trail.user %> </br></p>
+<% end %></center>
