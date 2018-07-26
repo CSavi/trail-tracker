@@ -2,7 +2,7 @@
   <div class="btn-grp">
     <a href="/users/<%= @user.slug %>"><button type="button" class="btn btn-primary">Profile</button></a>
     <br></br>
-        <% if @trail.user_id == current_user.id %>
+      <% if @trail.user_id == current_user.id %>
         <a href="/trails/<%= @trail.id %>/edit"><button type="button" class="btn btn-success">Edit</button></a>
       <% end %>
   </div>

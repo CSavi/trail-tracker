@@ -60,14 +60,13 @@ class TrailsController < ApplicationController
 
 
   patch "/trails/:id" do
-    if is_logged_in? && params[:name] == "" || params[:location] == ""
+    if is_logged_in? && (params[:name] == "" || params[:location] == "")
         redirect :"/trails/#{@trail.id}/edit"
     else
       @trail = Trail.find_by_id(params[:id])
       @trail.update(name: params[:name], location: params[:location], date: params[:date], distance: params[:distance], notes: params[:notes])
-      @trail.save
       flash[:success] = "Successfully edited trail"
-      redirect "/trails/#{@trail.id}%>"
+      redirect "/trails/#{@trail.id}"
     end
   end
 

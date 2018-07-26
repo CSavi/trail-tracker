@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     if is_logged_in?
       redirect :"/users/#{current_user.slug}"
     else
-      redirect :'/signup'
+      erb :signup
     end
   end
 
@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   post '/signup' do
     if params[:username] == "" || params[:password] == "" || params[:email] == ""
     #  flash[:error] = "You must fill out all fields to sign up."
-      redirect :'/signup'
+      erb :signup
     # elsif User.find_by(username: params[:username])
     #   #flash[:error] = "That username already exits."
     #   redirect :signup
