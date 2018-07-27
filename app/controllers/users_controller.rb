@@ -13,15 +13,14 @@ class UsersController < ApplicationController
 
   post '/signup' do
     if params[:username] == "" || params[:password] == "" || params[:email] == ""
-    #  flash[:error] = "You must fill out all fields to sign up."
       erb :signup
-    # elsif User.find_by(username: params[:username])
-    #   #flash[:error] = "That username already exits."
-    #   redirect :signup
+    elsif User.find_by(username: params[:username])
+      flash[:error] = "That username already exits. Please choose another."
+      redirect :signup
     else
       @user = User.create(username: params[:username], email: params[:email], password: params[:password])
       session[:user_id] = @user.id
-      redirect :"/trails/trails"
+      redirect :"/trails"
     end
   end
 
@@ -33,14 +32,14 @@ class UsersController < ApplicationController
     end
   end
 
+
   post '/login' do
     @user = User.find_by(username: params[:username])
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
-    #  flash[:success] = "Welcome back, #{@user.username}!"
       redirect :"/users/#{@user.slug}"
     else
-      flash[:error] = "Invalid username or password. Please try again."
+      flash[:error] = "Invalid username or password. Please try again or signup below."
       redirect :'/login'
     end
   end

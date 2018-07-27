@@ -1,16 +1,17 @@
 <div class="btn-grp">
 
-  <a href="/users/<%= @user.slug %>">Profile</a>
+  <a href="/users/<%= @user.slug %>">Profile</a><br>
+  <a href="/trails">All Trails</a><br>
   <p><a href="/logout">Log Out</a></p>
-  <br></br>
+  
 
 </div>
 
-<h2>Welcome, <%= "#{@user.username.capitalize}" %>!</h2>
+<h3>Welcome, <%= "#{@user.username.capitalize}" %>!</h3>
 <br></br>
 
 <% if @user == current_user %>
-<center><h3>You have logged <%= @user.trails.size %> trail(s):</h3>
+<center><h2>YOUR LOGGINGS: <%= @user.trails.size %></h2>
 <br></br>
 
 <% else %>
@@ -24,9 +25,7 @@
 <br></br>
 
 <% if @user == current_user %>
-<h5><a href="/trails/new">Click here to log more trails</a><h5></center>
-<br></br>
-
+  <h5><a href="/trails/new">- Click here to log more trails -</a><h5></center>
 <% end %>
 </center>
 

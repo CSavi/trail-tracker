@@ -1,27 +1,28 @@
-<br></br>
   <div class="btn-grp">
     <a href="/users/<%= @user.slug %>">Profile</a><br>
+    <a href="/trails">All Trails</a><br>
+    <a href="/trails/new">Add Trail</a><br>
+    <a href="/logout">Log Out</a><br>
 
     <% if @trail.user_id == current_user.id %>
       <a href="/trails/<%= @trail.id %>/edit">Edit</a>
-          <% end %><br>
-    <p><a href="/logout">Log Out</a></p>
+          <% end %>
+
   </div>
-<br></br>
 
 
-
-<center><h2>Trail Name: <%= @trail.name %></h2>
+<center><h2>TRAIL: <%= @trail.name %></h2>
 <h3>Location: <%= @trail.location %></h3>
 <h3>Distance(mi): <%= @trail.distance %></h3>
 <h3>Date: <%= @trail.date %></h3>
 <h3>Notes: <%= @trail.notes %></h3>
 <br></br>
+</center>
 
 
 
 <% if @trail.user == current_user %>
-
+<center>
 <form action="/trails/<%= @trail.id %>/delete" method="POST">
   <input type="hidden" id="hidden" name="_method" value="delete">
   <input type="submit" name="delete" value="Delete Trail">
