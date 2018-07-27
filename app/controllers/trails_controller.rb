@@ -5,8 +5,6 @@ class TrailsController < ApplicationController
   get "/trails" do
     @user = User.find_by_id(session[:user_id])
     if is_logged_in?
-      @user == current_user
-      session[:user_id] = @user.id
       @trails = Trail.all
       erb :"/trails/trails"
     else
@@ -26,13 +24,13 @@ class TrailsController < ApplicationController
 
   post "/trails" do
     if !is_logged_in?
-      redirect :login
+      redirect :'/login'
     elsif params[:name] == "" || params[:location] == ""
       redirect :"/trails/new"
     else
       @trail = Trail.create(name: params[:name], location: params[:location], date: params[:date], distance: params[:distance], notes: params[:notes])
       current_user.trails << @trail
-      flash[:success] = "You have created a new trail"
+      flash[:success] = "You've created a new trail!"
       redirect "/trails/#{@trail.id}"
     end
   end
@@ -51,17 +49,19 @@ class TrailsController < ApplicationController
 
   get "/trails/:id/edit" do
     @trail = Trail.find_by_id(params[:id])
-      if is_logged_in? && @trail.user_id == current_user.id
-        erb :"/trails/edit"
-      else
-        redirect :"/trails/#{@trail.id}"
-      end
+    if is_logged_in? && @trail.user_id == current_user.id
+      erb :"/trails/edit"
+    else
+      redirect :"/trails/#{@trail.id}"
+    end
   end
 
 
   patch "/trails/:id" do
     @trail = Trail.find_by_id(params[:id])
-    if is_logged_in? && (params[:name] == "" || params[:location] == "")
+    if !is_logged_in?
+      redirect :'/login'
+    elsif trail_user && (params[:name] == "" || params[:location] == "")
         redirect :"/trails/#{@trail.id}/edit"
     else
       @trail.update(name: params[:name], location: params[:location], date: params[:date], distance: params[:distance], notes: params[:notes])

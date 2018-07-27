@@ -27,6 +27,10 @@ class ApplicationController < Sinatra::Base
       # otherwise, return nil
       @current_user ||= User.find_by(id: session[:user_id])
     end
+
+    def trail_user
+      @current_trail ||= Trail.find_by(params[:id]) if session[:user_id] == current_user.id
+    end
   end
 
 end

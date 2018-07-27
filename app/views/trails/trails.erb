@@ -1,16 +1,18 @@
-  <div class="btn-group">
-    <p><a href="/users/<%= @user.slug %>">Profile</a><br>
-      <a href="/trails/new">Add Trails</a><br>
-      <a href="/logout">Log Out</a>
-    </p>
-    <br></br>
+<br></br>
+  <div class="nav_bar">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/users/<%= @user.slug %>">Profile</a></li>
+      <li><a href="/trails/new">Add Trails</a></li>
+      <li><a href="/logout">Log Out</a></li>
+    </ul>
  </div>
 
 
-<center><h2>Trail Log</h2>
+<center><h2>Posts by the Trail-Tracker Community</h2>
 
   <% Trail.all.each do |trail| %>
-  <a href="/trails/<%= trail.id %>"><p><%= trail.name %> - <%= trail.location %></a><br>Posted by:<%= trail.user%></a></br></p>
+  <a href="/trails/<%= trail.id %>"><p><%= trail.name %> - <%= trail.location %></a><br>Posted by: <%= trail.user.username if trail.user %></br></p>
   <% end %>
 <br></br>
 
