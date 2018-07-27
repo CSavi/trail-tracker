@@ -1,20 +1,20 @@
-<div class="btn-group">
-    <a href="/users/<%= @user.slug %>"><button type="button" class="btn btn-primary">Profile</button></a>
-    <a href="/trails/new"><button type="button" class="btn btn-success">Add Trail</button></a>
-</div>
+<br></br>
+  <div class="btn-group">
+    <p><a href="/users/<%= @user.slug %>">Profile</a><br>
+      <a href="/trails/new">Add Trail</a><br>
+      <a href="/logout">Log Out</a>
+    </p>
+    <br></br>
+ </div>
 <br></br>
 
 <h2>Welcome, <%= @user.username.capitalize %>!</h2>
-<br></br>
 
 <center><h3>Trail Log</h3>
-<br></br>
 
+  <% @trails.each do |trail| %>
+  <a href="/trails/<%= trail.id %>"><p><%= trail.name %> - <%= trail.location %></a><br>Posted by: <%= trail.user %> </br></p>
+  <% end %>
+<br></br>  
 
-
-<% @trails.each do |trail| %>
-<a href="/trails/<%= trail.id %>"><p><%= trail.name %> - <%= trail.location %></a><br>Posted by: <%= trail.user %> </br></p>
-<% end %></center>
-
-<br></br>
-<p><a href="/logout">Log Out</a></p>
+</center>

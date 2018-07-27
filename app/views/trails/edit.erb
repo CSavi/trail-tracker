@@ -1,3 +1,8 @@
+
+<br></br>
+<p><a href="/logout">Log Out</a></p>
+
+<br></br>
 <center><h2>Edit your entry: <%= @trail.name %></h2>
 <br></br>
 
@@ -10,8 +15,11 @@
     <br></br>
   <label for="distance">Distance: <input type="float" name="distance" id="distance" value="<%= @trail.distance %>">
     <br></br>
+  <label for="date">Date: <input type="date" name="date" id="date">
+    <br></br>
   <label for="notes">Notes: <input type="text" name="notes" id="notes" value="<%= @trail.notes %>">
   <br></br>
+    <br></br>
 
   <input type="submit" value="Submit Changes"></center>
 
