@@ -81,7 +81,7 @@ class TrailsController < ApplicationController
         redirect :"/trails"
       else
         redirect :"/trails"
-      end
+      end  
     end
   end
 end
