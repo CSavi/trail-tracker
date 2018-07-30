@@ -6,7 +6,7 @@ class TrailsController < ApplicationController
     @user = User.find_by_id(session[:user_id])
     if is_logged_in?
       @trails = Trail.all
-      erb :"/trails/trails"
+      erb :"/trails"
     else
       redirect :'/login'
     end
@@ -23,15 +23,16 @@ class TrailsController < ApplicationController
 
 
   post "/trails" do
-    if !is_logged_in?
-      redirect :'/login'
-    elsif params[:name] == "" || params[:location] == ""
+    if is_logged_in? && trail_user && params[:name] == "" || params[:location] == ""
       redirect :"/trails/new"
-    else
+    elsif is_logged_in? && trail_user
       @trail = Trail.create(name: params[:name], location: params[:location], date: params[:date], distance: params[:distance], notes: params[:notes])
       current_user.trails << @trail
       flash[:success] = "You've created a new trail!"
       redirect "/trails/#{@trail.id}"
+    else
+      flash[:message] = "You must log in as a user."
+      redirect :'/login'
     end
   end
 
@@ -60,13 +61,18 @@ class TrailsController < ApplicationController
   patch "/trails/:id" do
     @trail = Trail.find_by_id(params[:id])
     if !is_logged_in?
+      flash[:message] = "You must log in as a user."
       redirect :'/login'
     elsif trail_user && (params[:name] == "" || params[:location] == "")
-        redirect :"/trails/#{@trail.id}/edit"
-    else
+      flash[:message] = "Please fill out required fields."
+      redirect :"/trails/#{@trail.id}/edit"
+    elsif is_logged_in? && trail_user
       @trail.update(name: params[:name], location: params[:location], date: params[:date], distance: params[:distance], notes: params[:notes])
       flash[:success] = "Successfully edited trail"
       redirect "/trails/#{@trail.id}"
+    else
+      flash[:message] = "You've been redirected to Trail-Tracker's Community page."
+      redirect :'/trails'
     end
   end
 
@@ -81,7 +87,7 @@ class TrailsController < ApplicationController
         redirect :"/trails"
       else
         redirect :"/trails"
-      end  
+      end
     end
   end
 end
